@@ -1,0 +1,35 @@
+# Odvisnosti
+node_modules/
+**/node_modules/
+
+# Build in generirane datoteke
+dist/
+**/dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Okoljske spremenljivke in skrivnosti
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Dnevniki
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Urejevalniki in operacijski sistemi
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Začasne datoteke
+*.tmp
+*.swp
+.cache/

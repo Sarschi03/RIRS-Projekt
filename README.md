@@ -17,6 +17,19 @@
 - **Avtentikacija:** JWT, bcrypt
 - **Razvojna orodja:** Visual Studio Code, npm, Git, GitHub, Postman
 
+## Zagon frontenda
+
+Predpogoja: Node.js 24 LTS in npm.
+
+```sh
+cd frontend
+npm ci
+npm run dev
+```
+
+Struktura projekta in razvojni ukazi so opisani v
+[`frontend/README.md`](./frontend/README.md).
+
 ## Dokumentacija
 
 Projektna dokumentacija je v mapi [`docs/`](./docs/):
