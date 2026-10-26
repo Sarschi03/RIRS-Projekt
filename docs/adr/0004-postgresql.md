@@ -9,9 +9,9 @@ Uporabniki, članstva, projekti, naloge in evidence ur so medsebojno povezani.
 
 ## Obravnavane alternative
 
-- PostgreSQL
-- MongoDB
-- SQLite
+- PostgreSQL.
+- MongoDB.
+- SQLite.
 
 ## Sprejeta odločitev in utemeljitev
 

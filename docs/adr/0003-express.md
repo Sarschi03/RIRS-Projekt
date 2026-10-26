@@ -9,9 +9,9 @@ Potrebujemo API za naloge, projekte, ure in preverjanje pravic; obseg MVP je ome
 
 ## Obravnavane alternative
 
-- Node.js in Express
-- NestJS
-- Django REST Framework
+- Node.js in Express.
+- NestJS.
+- Django REST Framework.
 
 ## Sprejeta odločitev in utemeljitev
 

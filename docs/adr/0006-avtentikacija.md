@@ -9,9 +9,9 @@ Zaposleni, vodja projekta in vodja podjetja imajo različne pravice; ure zaposle
 
 ## Obravnavane alternative
 
-- JWT + bcrypt + RBAC
-- Strežniške seje
-- Zunanji ponudnik identitete
+- JWT + bcrypt + RBAC.
+- Strežniške seje.
+- Zunanji ponudnik identitete.
 
 ## Sprejeta odločitev in utemeljitev
 

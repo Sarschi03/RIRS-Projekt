@@ -9,9 +9,9 @@ Uporabniki želijo dostop do dnevnega načrta tudi na telefonu, čas razvoja pa 
 
 ## Obravnavane alternative
 
-- Odzivna spletna aplikacija
-- Ločena mobilna aplikacija
-- React Native
+- Odzivna spletna aplikacija.
+- Ločena mobilna aplikacija.
+- React Native.
 
 ## Sprejeta odločitev in utemeljitev
 

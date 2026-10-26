@@ -9,8 +9,8 @@ Med odjemalcem in strežnikom se prenašajo podatki o nalogah, uporabnikih in č
 
 ## Obravnavane alternative
 
-- TypeScript
-- JavaScript
+- TypeScript.
+- JavaScript.
 
 ## Sprejeta odločitev in utemeljitev
 

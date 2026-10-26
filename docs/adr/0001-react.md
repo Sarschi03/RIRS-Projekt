@@ -9,9 +9,9 @@ Kanban tabla, časovnik in dnevni seznam zahtevajo interaktivno posodabljanje br
 
 ## Obravnavane alternative
 
-- React z Vite
-- Vue
-- Strežniške HTML predloge
+- React z Vite.
+- Vue.
+- Strežniške HTML predloge.
 
 ## Sprejeta odločitev in utemeljitev
 
