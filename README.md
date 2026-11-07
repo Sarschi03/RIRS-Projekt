@@ -22,10 +22,13 @@
 Predpogoja: Node.js 24 LTS in npm.
 
 ```sh
-cd frontend
-npm ci
+npm install
 npm run dev
 ```
+
+Ukaze zaženite iz korenske mape projekta. Korenski `package.json` namesti
+odvisnosti frontenda in razvojne ukaze posreduje v mapo `frontend/`.
+Ukazi `npm run build`, `npm run lint` in `npm run typecheck` delujejo tudi iz korena.
 
 Struktura projekta in razvojni ukazi so opisani v
 [`frontend/README.md`](./frontend/README.md).

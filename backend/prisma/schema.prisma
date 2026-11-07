@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+// UPORABNIŠKE VLOGE
+
+enum Role {
+  EMPLOYEE
+  PROJECT_MANAGER
+  COMPANY_MANAGER
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+// UPORABNIKI
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(EMPLOYEE)
+  createdAt    DateTime @default(now())
+
+  memberships  ProjectMember[]
+  assignedTasks Task[] @relation("AssignedTasks")
+  createdTasks Task[]  @relation("CreatedTasks")
+  instructions ProjectInstruction[]
+  timeEntries  TimeEntry[]
+  dailyTodos   DailyTodo[]
+
+  @@map("users")
+}
+
+// PROJEKTI
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+
+  members      ProjectMember[]
+  tasks        Task[]
+  instructions ProjectInstruction[]
+
+  @@map("projects")
+}
+
+// ČLANI PROJEKTOV
+
+model ProjectMember {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  projectId Int
+
+  user      User    @relation(fields: [userId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@unique([userId, projectId])
+  @@map("project_members")
+}
+
+// PROJEKTNE NALOGE
+
+model Task {
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  instructions String?
+  status       TaskStatus @default(TODO)
+  priority     Priority   @default(MEDIUM)
+  deadline     DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  projectId    Int
+  assignedToId Int?
+  createdById  Int
+
+  project      Project @relation(fields: [projectId], references: [id])
+  assignedTo   User?   @relation("AssignedTasks", fields: [assignedToId], references: [id])
+  createdBy    User    @relation("CreatedTasks", fields: [createdById], references: [id])
+
+  timeEntries  TimeEntry[]
+  dailyTodos   DailyTodo[]
+
+  @@map("tasks")
+}
+
+// NAVODILA ZA PROJEKTE
+
+model ProjectInstruction {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  projectId Int
+  authorId  Int
+
+  project   Project @relation(fields: [projectId], references: [id])
+  author    User    @relation(fields: [authorId], references: [id])
+
+  @@map("project_instructions")
+}
+
+// EVIDENCA DELOVNEGA ČASA
+
+model TimeEntry {
+  id        Int       @id @default(autoincrement())
+  startTime DateTime
+  endTime   DateTime?
+  duration  Int?
+  note      String?
+  createdAt DateTime  @default(now())
+
+  userId    Int
+  taskId    Int
+
+  user      User @relation(fields: [userId], references: [id])
+  task      Task @relation(fields: [taskId], references: [id])
+
+  @@map("time_entries")
+}
+
+// OSEBNI DNEVNI TO-DO
+
+model DailyTodo {
+  id        Int      @id @default(autoincrement())
+  title     String
+  date      DateTime
+  completed Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  userId    Int
+  taskId    Int?
+
+  user      User  @relation(fields: [userId], references: [id])
+  task      Task? @relation(fields: [taskId], references: [id])
+
+  @@map("daily_todos")
+}
