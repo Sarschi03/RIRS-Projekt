@@ -18,37 +18,45 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
 import MockUserProvider from "../context/MockUserProvider";
+import AuthProvider from "../context/AuthProvider";
+import { ProtectedRoute, PublicOnlyRoute } from "./RouteGuards";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
-      <MockUserProvider>
-        <PreviewProvider>
-          <Routes>
-            <Route element={<AuthLayout />}>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            </Route>
+      <AuthProvider>
+        <MockUserProvider>
+          <PreviewProvider>
+            <Routes>
+              <Route element={<PublicOnlyRoute />}>
+                <Route element={<AuthLayout />}>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignupPage />} />
+                  <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                </Route>
+              </Route>
 
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/projects/:id" element={<ProjectDetailsPage />} />
-              <Route path="/time-tracking" element={<TimeTrackingPage />} />
-              <Route path="/my-day" element={<MyDayPage />} />
-              <Route path="/management" element={<ManagementPage />} />
-              <Route path="/users" element={<UsersPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/kanban" element={<KanbanPage />} />
-              <Route path="/statistics" element={<StatisticsPage />} />
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
-            </Route>
-          </Routes>
-        </PreviewProvider>
-      </MockUserProvider>
+              <Route element={<ProtectedRoute />}>
+                <Route element={<MainLayout />}>
+                  <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/projects" element={<ProjectsPage />} />
+                  <Route path="/projects/:id" element={<ProjectDetailsPage />} />
+                  <Route path="/time-tracking" element={<TimeTrackingPage />} />
+                  <Route path="/my-day" element={<MyDayPage />} />
+                  <Route path="/management" element={<ManagementPage />} />
+                  <Route path="/users" element={<UsersPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/kanban" element={<KanbanPage />} />
+                  <Route path="/statistics" element={<StatisticsPage />} />
+                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </Route>
+              </Route>
+            </Routes>
+          </PreviewProvider>
+        </MockUserProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
