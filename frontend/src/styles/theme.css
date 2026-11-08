@@ -39,3 +39,30 @@
 .remember-label input, .member-checkbox input { accent-color: var(--workit-accent-ink); }
 .attention-mark { background: #fc825e25; color: var(--workit-accent-ink); }
 .auth-switch a, .auth-shell .plain-button { color: var(--workit-accent-ink); }
+
+/* Content icons remain unboxed; color alone carries their emphasis. */
+.workspace .stat-card .stat-icon,
+.workspace .project-symbol,
+.workspace .attention-mark,
+.workspace .time-entry-add,
+.workspace .profile-photo-camera {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.workspace .project-symbol,
+.workspace .attention-mark { padding: 0; }
+.workspace .icon-button:hover { background: transparent; }
+.workspace .time-entry-add:hover:not(:disabled),
+.workspace .profile-photo-button:hover .profile-photo-camera,
+.workspace .task-card .task-priority { background: transparent; }
+.workspace .task-card .task-priority { padding: 0; }
+.sidebar-toggle,
+.sidebar-toggle:hover,
+.sidebar-icon,
+.sidebar-link:hover .sidebar-icon,
+.sidebar-link.active .sidebar-icon,
+.workspace-profile-link {
+  background: transparent;
+}
+.sidebar-link.active .sidebar-icon { color: var(--workit-accent-ink); }

@@ -1,8 +1,25 @@
-import { timeEntries, projects, tasks } from "../../data/mockData";
+import { useState } from "react";
+import { Plus } from "lucide-react";
+import { timeEntries, projects } from "../../data/mockData";
 
 export default function TimeEntriesTable() {
+  const [showManualEntry, setShowManualEntry] = useState(false);
   return (
-    <div className="table-scroll">
+    <>
+      <div className="time-table-toolbar">
+        <button
+          type="button"
+          className="time-entry-add"
+          aria-label="Dodaj ročni časovni zapis"
+          title="Dodaj ročni časovni zapis"
+          aria-expanded={showManualEntry}
+          disabled={showManualEntry}
+          onClick={() => setShowManualEntry(true)}
+        >
+          <Plus size={17} />
+        </button>
+      </div>
+      <div className="table-scroll">
       <table>
         <caption className="sr-only">
           Časovni zapisi z vrstico za ročni vnos.
@@ -17,7 +34,7 @@ export default function TimeEntriesTable() {
           </tr>
         </thead>
         <tbody>
-          <tr className="manual-entry-row">
+          {showManualEntry && <tr className="manual-entry-row">
             <td>
               <input type="date" aria-label="Datum ročnega vnosa" />
             </td>
@@ -29,16 +46,6 @@ export default function TimeEntriesTable() {
                 {projects.map((project) => (
                   <option key={project.id} value={project.id}>
                     {project.name}
-                  </option>
-                ))}
-              </select>
-              <select aria-label="Naloga ročnega vnosa" defaultValue="">
-                <option value="" disabled>
-                  Izberite nalogo
-                </option>
-                {tasks.map((task) => (
-                  <option key={task.id} value={task.id}>
-                    {task.title}
                   </option>
                 ))}
               </select>
@@ -57,7 +64,7 @@ export default function TimeEntriesTable() {
               />
               <span className="cell-secondary">Ročni vnos</span>
             </td>
-          </tr>
+          </tr>}
           {timeEntries.map((entry, index) => (
             <tr key={index}>
               <td>{entry.date}</td>
@@ -72,6 +79,7 @@ export default function TimeEntriesTable() {
           ))}
         </tbody>
       </table>
-    </div>
+      </div>
+    </>
   );
 }

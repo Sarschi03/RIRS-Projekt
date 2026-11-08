@@ -1,16 +1,26 @@
-import { BriefcaseBusiness, ListTodo } from "lucide-react";
+import { Button } from "../common/UI";
+
+const highlights = ["Današnji načrt", "Službeni projekti", "Zaključeno danes"];
 
 export default function DayHighlights() {
   return (
-    <div className="day-highlights">
-      <article className="day-highlight is-blue">
-        <span className="day-highlight-icon"><ListTodo size={18} /></span>
-        <div><span>Današnji načrt</span><strong>5 nalog</strong></div>
-      </article>
-      <article className="day-highlight is-pink">
-        <span className="day-highlight-icon"><BriefcaseBusiness size={18} /></span>
-        <div><span>Projekti</span><strong>Službeni projekti</strong></div>
-      </article>
-    </div>
+    <section className="day-highlights" aria-labelledby="day-highlights-title">
+      <div className="day-highlights-heading">
+        <div>
+          <h2 id="day-highlights-title">Pregled dneva</h2>
+          <p>Tvoje obveznosti.</p>
+        </div>
+        <Button primary icon action="daily-task">Dodaj</Button>
+      </div>
+      <div className="day-highlight-track">
+        {highlights.map((label, index) => (
+          <article
+            className={`day-highlight tone-${index + 1}`}
+            aria-label={label}
+            key={label}
+          />
+        ))}
+      </div>
+    </section>
   );
 }

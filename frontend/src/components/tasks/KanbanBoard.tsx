@@ -20,6 +20,11 @@ type Status = Task["status"];
 type DragItem = { kind: "task"; id: string } | { kind: "column"; id: Status };
 const initialColumns: Status[] = ["Za opraviti", "V teku", "Opravljeno"];
 
+function hasTaskCover(taskId: string) {
+  const number = Number(taskId.split("-").at(-1));
+  return Number.isFinite(number) && number % 3 === 0;
+}
+
 export default function KanbanBoard({
   items = tasks,
   project,
@@ -282,6 +287,9 @@ export default function KanbanBoard({
                       setHover(null);
                     }}
                   >
+                    {hasTaskCover(task.id) && (
+                      <div className="task-card-cover" aria-hidden="true" />
+                    )}
                     <div className="task-card-id">
                       <div className="task-id-with-handle">
                         <button
