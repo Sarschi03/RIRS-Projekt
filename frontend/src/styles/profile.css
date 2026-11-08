@@ -1,0 +1,184 @@
+.profile-page {
+  display: grid;
+  gap: 36px;
+  width: 100%;
+  min-width: 0;
+}
+.profile-hero {
+  background: transparent;
+}
+.profile-cover {
+  height: var(--workspace-cover-height);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  background: #76aec4;
+}
+.profile-cover-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+}
+.profile-identity {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  padding: 0 24px 10px;
+}
+.profile-hero-avatar {
+  flex-shrink: 0;
+  position: relative;
+  margin-top: -58px;
+  border: 5px solid #fafafa;
+  border-radius: 50%;
+  background: #fafafa;
+}
+.profile-hero-avatar .avatar {
+  width: 128px;
+  height: 128px;
+  font-size: 34px;
+  border: none;
+  background: #e4e4e4;
+  color: #646464;
+}
+.profile-photo-control { flex-shrink: 0; }
+.profile-photo-button { display: block; padding: 0; cursor: pointer; font: inherit; }
+.profile-photo-button:focus-visible { outline: 3px solid var(--workit-blue-ink); outline-offset: 4px; }
+.profile-photo { display: block; width: 128px; height: 128px; object-fit: cover; border-radius: 50%; }
+.profile-photo-camera { position: absolute; right: 0; bottom: 0; display: grid; place-items: center; width: 32px; height: 32px; border: 3px solid #fafafa; border-radius: 50%; background: var(--workit-accent); color: #3e241c; }
+.profile-photo-button:hover .profile-photo-camera { background: var(--workit-pink); }
+.profile-identity-text .profile-photo-feedback { margin-top: 12px; color: var(--workit-blue-ink); font-size: 11px; }
+.profile-identity-text .profile-photo-feedback.is-error { color: #9b382c; }
+.profile-identity-text {
+  min-width: 0;
+  padding-top: 26px;
+}
+.profile-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.workspace .profile-name h1 {
+  font-size: 26px;
+  letter-spacing: -0.7px;
+  font-weight: 550;
+}
+.profile-role {
+  color: #475762;
+  font-size: 11px;
+}
+.profile-identity-text > p {
+  font-size: 11px;
+  color: #475762;
+  margin-top: 7px;
+}
+.profile-email {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  font-size: 10px;
+  color: #475762;
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+}
+.profile-email svg {
+  flex-shrink: 0;
+}
+.profile-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+.profile-content-grid > * {
+  min-width: 0;
+}
+.profile-block-heading {
+  padding-bottom: 24px;
+}
+.workspace .profile-block-heading h2 {
+  font-size: 14px;
+  font-weight: 550;
+}
+.workspace .profile-block-heading p {
+  font-size: 11px;
+  color: #929292;
+  margin-top: 6px;
+}
+.profile-projects td:first-child > a {
+  font-weight: 500;
+  color: #4a4a4a;
+}
+.profile-projects td:first-child > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.profile-project-link {
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 4px;
+}
+.workspace .profile-projects th {
+  background: transparent;
+}
+.workspace .profile-projects th,
+.workspace .profile-projects td {
+  padding-left: 0;
+  padding-right: 14px;
+}
+@media (max-width: 850px) {
+  .profile-content-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+@media (max-width: 640px) {
+  .profile-page {
+    gap: 30px;
+    width: 100%;
+  }
+  .profile-cover { border-radius: 10px; }
+  .profile-identity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 0 16px 8px;
+  }
+  .profile-cover { position: relative; height: var(--workspace-cover-height); }
+  .profile-hero-avatar { margin-top: -48px; }
+  .profile-identity-text { padding-top: 0; }
+  .profile-hero-avatar .avatar {
+    width: 104px;
+    height: 104px;
+    font-size: 28px;
+  }
+  .profile-photo { width: 104px; height: 104px; }
+  .workspace .profile-name h1 {
+    font-size: 24px;
+  }
+  .profile-name {
+    gap: 10px;
+  }
+  .profile-identity-text > p {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .profile-email {
+    font-size: 10px;
+    gap: 6px;
+  }
+  .profile-projects table {
+    white-space: normal;
+  }
+  .workspace .profile-projects th,
+  .workspace .profile-projects td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .profile-projects td:first-child {
+    width: 60%;
+  }
+}

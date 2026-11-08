@@ -1,0 +1,57 @@
+.workspace-role-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.role-switcher {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.role-switcher > span {
+  font-size: 10px;
+  color: #888;
+}
+.role-switcher select {
+  max-width: 275px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #555;
+  font-size: 11px;
+  cursor: pointer;
+}
+@media (max-width: 850px) {
+  .workspace-topbar {
+    flex-wrap: wrap;
+  }
+  .workspace-role-controls {
+    margin-left: auto;
+  }
+}
+@media (max-width: 640px) {
+  .workspace-topbar {
+    gap: 12px;
+  }
+  .workspace-role-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .role-switcher {
+    flex: 1;
+  }
+  .role-switcher select {
+    width: 100%;
+    max-width: none;
+    font-size: 11px;
+    padding: 9px 5px;
+  }
+  .role-switcher > span {
+    font-size: 9px;
+  }
+}

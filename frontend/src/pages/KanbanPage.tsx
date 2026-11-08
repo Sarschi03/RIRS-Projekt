@@ -4,12 +4,11 @@ export default function KanbanPage() {
   return (
     <>
       <PageHeading
-        eyebrow="WEBSITE REDESIGN"
-        title="Task board"
-        description="From the first idea to the final detail."
+        title="Tabla Kanban"
+        description="Od prve zamisli do zadnje podrobnosti."
         action={
-          <Button primary icon>
-            Add task
+          <Button primary icon action="task">
+            Dodaj nalogo
           </Button>
         }
       />

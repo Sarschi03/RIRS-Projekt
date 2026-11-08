@@ -1,11 +1,11 @@
 const days = [
-  { day: "Mon", hours: "6h", height: 60 },
-  { day: "Tue", hours: "7h", height: 70 },
-  { day: "Wed", hours: "5h", height: 50 },
-  { day: "Thu", hours: "5h 15m", height: 52.5 },
-  { day: "Fri", hours: "5h 30m", height: 55 },
-  { day: "Sat", hours: "3h 30m", height: 35 },
-  { day: "Sun", hours: "0h", height: 0 },
+  { day: "Pon", hours: "6 h", height: 60 },
+  { day: "Tor", hours: "7 h", height: 70 },
+  { day: "Sre", hours: "5 h", height: 50 },
+  { day: "Čet", hours: "5 h 15 min", height: 52.5 },
+  { day: "Pet", hours: "5 h 30 min", height: 55 },
+  { day: "Sob", hours: "3 h 30 min", height: 35 },
+  { day: "Ned", hours: "0 h", height: 0 },
 ];
 
 export default function HoursChart() {
@@ -13,19 +13,19 @@ export default function HoursChart() {
     <div
       className="hours-chart"
       role="img"
-      aria-label="Weekly hours: Monday 6, Tuesday 7, Wednesday 5, Thursday 5 hours 15 minutes, Friday 5 hours 30 minutes, Saturday 3 hours 30 minutes, Sunday 0."
+      aria-label="Tedenske ure: ponedeljek 6, torek 7, sreda 5, četrtek 5 ur in 15 minut, petek 5 ur in 30 minut, sobota 3 ure in 30 minut, nedelja 0."
     >
       <div className="chart-grid">
-        <span>10h</span>
-        <span>5h</span>
-        <span>0h</span>
+        <span>10 h</span>
+        <span>5 h</span>
+        <span>0 h</span>
       </div>
       <div className="chart-bars">
         {days.map((day) => (
           <div className="chart-day" key={day.day}>
             <div className="bar-space">
               <div
-                className={`chart-bar ${day.day === "Sat" ? "current" : ""}`}
+                className={`chart-bar ${day.day === "Sob" ? "current" : ""}`}
                 style={{ height: `${day.height}%` }}
               >
                 <span>{day.hours}</span>

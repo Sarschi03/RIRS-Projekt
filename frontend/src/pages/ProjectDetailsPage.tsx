@@ -3,6 +3,8 @@ import {
   ChevronLeft,
   FileText,
   MoreHorizontal,
+  Upload,
+  UsersRound,
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { projects, projectTasks } from "../data/mockData";
@@ -15,8 +17,15 @@ import {
 } from "../components/common/UI";
 import KanbanBoard from "../components/tasks/KanbanBoard";
 import TaskDetails from "../components/tasks/TaskDetails";
+import { useState } from "react";
+import PageTabs from "../components/common/PageTabs";
+import {
+  ProjectFiles,
+  ProjectOverview,
+} from "../components/projects/ProjectViews";
 
 export default function ProjectDetailsPage() {
+  const [tab, setTab] = useState("board");
   const { id } = useParams();
   const project = projects.find((item) => item.id === id);
   const items = projectTasks[id || ""] || [];
@@ -24,12 +33,11 @@ export default function ProjectDetailsPage() {
     return (
       <>
         <PageHeading
-          eyebrow="PROJECTS"
-          title="Project not found"
-          description="This project isn’t part of the preview workspace."
+          title="Projekta ni mogoče najti"
+          description="Izbranega projekta ni mogoče najti."
         />
         <Link className="text-link" to="/projects">
-          Back to projects
+          Nazaj na projekte
         </Link>
       </>
     );
@@ -37,19 +45,29 @@ export default function ProjectDetailsPage() {
     <>
       <Link className="back-link" to="/projects">
         <ChevronLeft size={14} />
-        All projects
+        Vsi projekti
       </Link>
       <PageHeading
-        eyebrow="PROJECT WORKSPACE"
         title={project.name}
         description={project.description}
         action={
           <div className="heading-actions">
-            <Button>
+            <Button action={{ kind: "project-members", project }}>
+              <UsersRound size={16} />
+              Člani
+            </Button>
+            <Button
+              action={{ kind: "project-options", project }}
+              aria-label="Možnosti projekta"
+            >
               <MoreHorizontal size={17} />
             </Button>
-            <Button primary icon>
-              Add task
+            <Button action={{ kind: "upload", project }}>
+              <Upload size={16} />
+              Naloži
+            </Button>
+            <Button primary icon action={{ kind: "task", project }}>
+              Dodaj nalogo
             </Button>
           </div>
         }
@@ -58,36 +76,50 @@ export default function ProjectDetailsPage() {
         <Badge>{project.status}</Badge>
         <span>
           <CalendarDays size={15} />
-          Due {project.end}
+          Rok {project.end}
         </span>
         <AvatarGroup members={project.members} />
         <div className="summary-progress">
-          <span>{project.progress}% complete</span>
+          <span>{project.progress}% zaključeno</span>
           <Progress value={project.progress} />
         </div>
       </div>
       <div className="instruction-banner">
         <FileText size={19} />
         <div>
-          <strong>A note from your project manager</strong>
+          <strong>Sporočilo vodje projekta</strong>
           <p>
-            Keep things simple and accessible. Share your explorations before
-            polishing the details, and use our agreed visual direction as a
-            starting point.
+            Poskrbite za preprosto in dostopno rešitev. Pred dokončnim
+            oblikovanjem delite svoje predloge ter izhajajte iz dogovorjenih
+            vizualnih smernic.
           </p>
         </div>
       </div>
-      <div className="page-tabs">
-        <span className="selected">Board</span>
-        <span>Overview</span>
-        <span>Files</span>
+      <PageTabs
+        label="Vsebine projekta"
+        value={tab}
+        onChange={setTab}
+        options={[
+          { value: "board", label: "Kanban" },
+          { value: "overview", label: "Pregled" },
+          { value: "files", label: "Datoteke" },
+        ]}
+      />
+      <div hidden={tab !== "board"}>
+        <KanbanBoard key={project.id} items={items} project={project} />
+        <div className="task-detail-section">
+          <TaskDetails
+            task={items.find((task) => task.status === "V teku") || items[0]}
+          />
+        </div>
       </div>
-      <KanbanBoard items={items} />
-      <div className="task-detail-section">
-        <TaskDetails
-          task={items.find((task) => task.status === "In Progress") || items[0]}
+      {tab === "overview" && (
+        <ProjectOverview
+          project={project}
+          task={items.find((task) => task.status === "V teku") || items[0]}
         />
-      </div>
+      )}
+      {tab === "files" && <ProjectFiles project={project} />}
     </>
   );
 }

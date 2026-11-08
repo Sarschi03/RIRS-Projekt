@@ -37,9 +37,8 @@ body {
   height: 100dvh;
   overflow-y: auto;
   width: 72px;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  padding: 20px 12px;
+  background: transparent;
+  padding: 80px 12px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -49,26 +48,15 @@ body {
 
 .sidebar.expanded {
   width: 230px;
-}
-
-.sidebar-logo {
-  background: #17191d;
-  color: white;
-  border-radius: 23px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #fafafa;
 }
 
 .sidebar-toggle,
 .sidebar-link {
   border: none;
-  background: #f3f4f6;
+  background: transparent;
   color: #374151;
-  border-radius: 50%;
-  width: 46px;
-  min-height: 44px;
+  min-height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,19 +67,39 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 30px;
+}
+
+.sidebar-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+.sidebar-toggle:hover {
+  background: #ededed;
+}
+.sidebar-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #f0f0f0;
 }
 
 .sidebar-link {
   text-decoration: none;
   gap: 14px;
-  padding: 10px;
+  padding: 0;
   white-space: nowrap;
 }
 
 .sidebar.expanded .sidebar-link {
   justify-content: flex-start;
-  width: 100%;
-  border-radius: 16px;
 }
 
 .sidebar svg {
@@ -107,10 +115,14 @@ body {
 }
 
 .sidebar-link:hover {
-  background: #e5e7eb;
+  background: transparent;
 }
 
-.sidebar-link.active {
+.sidebar-link:hover .sidebar-icon {
+  background: #ededed;
+}
+
+.sidebar-link.active .sidebar-icon {
   background: #17191d;
   color: white;
 }
@@ -118,8 +130,13 @@ body {
 .sidebar-bottom {
   margin-top: auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
   color: #6b7280;
+}
+
+.app-layout {
+  background: #fafafa;
 }
 
 .main-content {
@@ -127,4 +144,3 @@ body {
   min-width: 0;
   padding: 32px;
 }
-

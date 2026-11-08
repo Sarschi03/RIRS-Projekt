@@ -6,49 +6,48 @@ import { Avatar, Badge, Panel } from "../common/UI";
 export default function TaskDetails({ task = tasks[3] }: { task?: Task }) {
   return (
     <Panel
-      title="Task details"
-      subtitle="A closer look at the work"
+      title="Podrobnosti naloge"
+      subtitle="Podrobnejši pregled dela"
       action={<Info size={17} />}
       className="task-details"
     >
-      <span className="eyebrow">{task.id}</span>
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <dl className="detail-list">
         <div>
-          <dt>Assigned to</dt>
+          <dt>Dodeljeno</dt>
           <dd>
             <Avatar initials={task.assignee} />
             {task.name}
           </dd>
         </div>
         <div>
-          <dt>Status</dt>
+          <dt>Stanje</dt>
           <dd>
             <Badge>{task.status}</Badge>
           </dd>
         </div>
         <div>
-          <dt>Priority</dt>
+          <dt>Prioriteta</dt>
           <dd>
             <Flag size={14} />
             {task.priority}
           </dd>
         </div>
         <div>
-          <dt>Deadline</dt>
+          <dt>Rok</dt>
           <dd>
             <CalendarDays size={14} />
-            {task.deadline}, 2026
+            {task.deadline} 2026
           </dd>
         </div>
       </dl>
       <div className="instruction-note">
-        <h4>Work instructions</h4>
+        <h4>Navodila za delo</h4>
         <p>
-          Follow the approved project brief and shared reference materials.
-          Share your first draft with the project manager, gather team feedback,
-          and prepare a clear handoff for the next review.
+          Upoštevajte potrjena projektna izhodišča in skupna referenčna gradiva.
+          Prvi osnutek delite z vodjo projekta, zberite povratne informacije
+          ekipe in pripravite jasna navodila za naslednji pregled.
         </p>
       </div>
     </Panel>
