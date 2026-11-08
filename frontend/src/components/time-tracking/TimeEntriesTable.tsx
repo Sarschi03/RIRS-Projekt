@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { timeEntries, projects } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 
 export default function TimeEntriesTable() {
+  const { data } = useAppData();
+  const { timeEntries, projects } = data;
   const [showManualEntry, setShowManualEntry] = useState(false);
   return (
     <>
@@ -65,8 +67,8 @@ export default function TimeEntriesTable() {
               <span className="cell-secondary">Ročni vnos</span>
             </td>
           </tr>}
-          {timeEntries.map((entry, index) => (
-            <tr key={index}>
+          {timeEntries.map((entry) => (
+            <tr key={entry.id}>
               <td>{entry.date}</td>
               <td>
                 <strong>{entry.task}</strong>

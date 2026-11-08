@@ -17,15 +17,15 @@ import PreviewProvider from "../components/common/PreviewProvider";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
-import MockUserProvider from "../context/MockUserProvider";
 import AuthProvider from "../context/AuthProvider";
+import DataProvider from "../context/DataProvider";
 import { ProtectedRoute, PublicOnlyRoute } from "./RouteGuards";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <MockUserProvider>
+        <DataProvider>
           <PreviewProvider>
             <Routes>
               <Route element={<PublicOnlyRoute />}>
@@ -55,7 +55,7 @@ export default function AppRouter() {
               </Route>
             </Routes>
           </PreviewProvider>
-        </MockUserProvider>
+        </DataProvider>
       </AuthProvider>
     </BrowserRouter>
   );

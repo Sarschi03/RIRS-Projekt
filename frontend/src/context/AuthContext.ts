@@ -7,6 +7,8 @@ export const AuthContext = createContext<{
   login: (email: string, password: string) => Promise<void>;
   register: (input: { name: string; email: string; password: string; role: RoleId }) => Promise<void>;
   logout: () => void;
+  profileImage: string | undefined;
+  setProfileImage: (image: string) => void;
 } | null>(null);
 
 export function useAuth() {

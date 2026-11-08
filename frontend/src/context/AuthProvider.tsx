@@ -9,6 +9,7 @@ type AuthResponse = { token: string; user: AuthUser };
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(Boolean(getToken()));
+  const [profileImage, setProfileImage] = useState<string>();
 
   useEffect(() => {
     if (!getToken()) return;
@@ -43,7 +44,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       setToken(null);
       setUser(null);
     },
-  }), [user, loading]);
+    profileImage,
+    setProfileImage,
+  }), [user, loading, profileImage]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

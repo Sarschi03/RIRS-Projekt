@@ -140,19 +140,7 @@ export default function PreviewProvider({ children }: { children: ReactNode }) {
                 <FileText size={34} />
                 <h3>{action.title}</h3>
                 <p>Referenčna gradiva projekta</p>
-                <div className="sample-document">
-                  <h4>Smernice in rezultati</h4>
-                  <p>
-                    Poskrbite za preprosto, dostopno in enotno uporabniško
-                    izkušnjo. Preglejte dogovorjene vizualne reference, sproti
-                    delite svoje delo in pripravite jasna navodila za predajo.
-                  </p>
-                  <h4>Kontrolni seznam</h4>
-                  <p>
-                    Postavitve za računalnik in telefon · Jasno določene
-                    odgovornosti · Pregled z ekipo · Končna predaja
-                  </p>
-                </div>
+                <p>Za izbrano datoteko ni shranjenega predogleda.</p>
               </div>
             ) : (
               <form

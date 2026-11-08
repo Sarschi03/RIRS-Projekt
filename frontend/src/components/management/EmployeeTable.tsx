@@ -1,12 +1,11 @@
 import { MoreHorizontal } from "lucide-react";
-import { people } from "../../data/mockData";
 import { Avatar, Badge } from "../common/UI";
 import { usePreview } from "../../context/PreviewContext";
 import type { Person } from "../../types/ui";
 
 export default function EmployeeTable({
   users = false,
-  members = people,
+  members = [],
 }: {
   users?: boolean;
   members?: Person[];

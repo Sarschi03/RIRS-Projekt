@@ -1,12 +1,13 @@
-import { projects } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 import { Panel } from "../common/UI";
 import ProjectCard from "../projects/ProjectCard";
 
 export function ActiveProjects() {
+  const { data } = useAppData();
   return (
     <Panel title="Aktivni projekti" subtitle="Skupaj naprej">
       <div className="dashboard-project-grid">
-        {projects.slice(0, 3).map((project) => (
+        {data.projects.slice(0, 3).map((project) => (
           <ProjectCard project={project} key={project.id} />
         ))}
       </div>
@@ -15,30 +16,15 @@ export function ActiveProjects() {
 }
 
 export function Deadlines() {
+  const { data } = useAppData();
   return (
     <Panel title="Prihaja" subtitle="Načrtujte pravočasno">
       <div className="deadline-list">
-        {[
-          {
-            day: "09",
-            title: "Oblikovanje pregleda projekta",
-            project: "Prenova spletne strani",
-          },
-          {
-            day: "10",
-            title: "Načrt uvajanja",
-            project: "Prenova spletne strani",
-          },
-          {
-            day: "12",
-            title: "Knjižnica komponent",
-            project: "Prenova spletne strani",
-          },
-        ].map((item) => (
-          <div className="deadline-row" key={item.day}>
+        {data.tasks.filter((task) => task.status !== "Opravljeno").slice(0, 3).map((item) => (
+          <div className="deadline-row" key={item.id}>
             <div className="date-tile">
-              <span>NOV</span>
-              <strong>{item.day}</strong>
+              <span>ROK</span>
+              <strong>{item.deadline.split(". ")[0]}</strong>
             </div>
             <div>
               <h3>{item.title}</h3>

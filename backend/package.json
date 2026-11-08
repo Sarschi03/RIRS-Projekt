@@ -6,6 +6,8 @@
   "scripts": {
     "postinstall": "prisma generate",
     "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/src/server.js",

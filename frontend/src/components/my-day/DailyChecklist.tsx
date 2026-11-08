@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { Check, Clock3, Flag } from "lucide-react";
-import { dailyTasks } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 
 function TaskCheckbox({ done }: { done: boolean }) {
   return (
@@ -21,14 +20,12 @@ export default function DailyChecklist({
   compact?: boolean;
   simple?: boolean;
 }) {
-  const items = compact ? dailyTasks.slice(0, 4) : dailyTasks;
-  const [completed, setCompleted] = useState(
-    () => new Set(dailyTasks.filter((task) => task.done).map((task) => task.title)),
-  );
+  const { data, toggleDailyTask } = useAppData();
+  const items = compact ? data.dailyTasks.slice(0, 4) : data.dailyTasks;
   return (
     <div className={`daily-list ${compact ? "compact" : ""} ${simple ? "simple" : ""}`}>
       {items.map((task) => {
-        const isDone = simple ? completed.has(task.title) : task.done;
+        const isDone = task.done;
         return (
         <article
           className={`daily-task ${isDone ? "is-done" : ""}`}
@@ -46,14 +43,7 @@ export default function DailyChecklist({
               type="checkbox"
               checked={isDone}
               aria-label={`${isDone ? "Odznači" : "Označi"} nalogo ${task.title}`}
-              onChange={() =>
-                setCompleted((current) => {
-                  const next = new Set(current);
-                  if (next.has(task.title)) next.delete(task.title);
-                  else next.add(task.title);
-                  return next;
-                })
-              }
+              onChange={() => void toggleDailyTask(task.id, !isDone)}
             />
           )}
           {!simple && <div className="daily-task-meta">

@@ -4,9 +4,11 @@ import { ChevronLeft } from "lucide-react";
 import { Button, FilterBar, PageHeading, Panel } from "../components/common/UI";
 import PageTabs from "../components/common/PageTabs";
 import EmployeeTable from "../components/management/EmployeeTable";
-import { people } from "../data/mockData";
+import { useAppData } from "../context/DataContext";
 
 export default function UsersPage() {
+  const { data } = useAppData();
+  const people = data.people;
   const [tab, setTab] = useState("all");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("Vsa stanja");
@@ -39,9 +41,9 @@ export default function UsersPage() {
         value={tab}
         onChange={setTab}
         options={[
-          { value: "all", label: "Vsi člani", count: 6 },
-          { value: "active", label: "Aktivni", count: 5 },
-          { value: "invited", label: "Povabljeni", count: 1 },
+          { value: "all", label: "Vsi člani", count: people.length },
+          { value: "active", label: "Aktivni", count: people.filter((item) => item.status === "Aktiven").length },
+          { value: "invited", label: "Povabljeni", count: people.filter((item) => item.status === "Povabljen").length },
         ]}
       />
       <FilterBar

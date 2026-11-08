@@ -11,10 +11,10 @@ import {
   Plus,
   Upload,
 } from "lucide-react";
-import { tasks } from "../../data/mockData";
 import type { Project, Task } from "../../types/ui";
 import { Avatar } from "../common/UI";
 import { usePreview } from "../../context/PreviewContext";
+import { useAppData } from "../../context/DataContext";
 
 type Status = Task["status"];
 type DragItem = { kind: "task"; id: string } | { kind: "column"; id: Status };
@@ -26,15 +26,16 @@ function hasTaskCover(taskId: string) {
 }
 
 export default function KanbanBoard({
-  items = tasks,
+  items,
   project,
 }: {
   items?: Task[];
   project?: Project;
 }) {
-  // Transient layout state only. Source fixtures are never mutated or saved.
+  const { data } = useAppData();
+  const sourceItems = items || data.tasks;
   const [cards, setCards] = useState<Task[]>(() =>
-    items.map((item) => ({ ...item })),
+    sourceItems.map((item) => ({ ...item })),
   );
   const [columns, setColumns] = useState<Status[]>(initialColumns);
   const [drag, setDrag] = useState<DragItem | null>(null);
@@ -43,6 +44,7 @@ export default function KanbanBoard({
   const board = useRef<HTMLDivElement>(null);
   const pointerOrigin = useRef<{ x: number; y: number } | null>(null);
   const { open } = usePreview();
+  const boardCards = cards.length ? cards : sourceItems;
 
   function moveTask(
     id: string,
@@ -51,9 +53,10 @@ export default function KanbanBoard({
     after = false,
   ) {
     setCards((current) => {
-      const original = current.find((card) => card.id === id);
-      if (!original || before === id) return current;
-      const next = current.filter((card) => card.id !== id);
+      const base = current.length ? current : sourceItems;
+      const original = base.find((card) => card.id === id);
+      if (!original || before === id) return base;
+      const next = base.filter((card) => card.id !== id);
       const target = before ? next.findIndex((card) => card.id === before) : -1;
       next.splice(target < 0 ? next.length : target + (after ? 1 : 0), 0, {
         ...original,
@@ -157,7 +160,7 @@ export default function KanbanBoard({
         columns.indexOf(task.status) + (event.key === "ArrowRight" ? 1 : -1);
       if (columns[index]) moveTask(task.id, columns[index]);
     } else {
-      const siblings = cards.filter((card) => card.status === task.status);
+      const siblings = boardCards.filter((card) => card.status === task.status);
       const index =
         siblings.findIndex((card) => card.id === task.id) +
         (event.key === "ArrowDown" ? 1 : -1);
@@ -241,7 +244,7 @@ export default function KanbanBoard({
                 />
                 <h2>{status}</h2>
                 <span className="count">
-                  {cards.filter((task) => task.status === status).length}
+                  {boardCards.filter((task) => task.status === status).length}
                 </span>
               </div>
               <div>
@@ -271,7 +274,7 @@ export default function KanbanBoard({
               </div>
             </header>
             <div className="kanban-cards">
-              {cards
+              {boardCards
                 .filter((task) => task.status === status)
                 .map((task) => (
                   <article
@@ -374,7 +377,7 @@ export default function KanbanBoard({
                           className="icon-button"
                           aria-label={`Premakni ${task.title} navzgor`}
                           onClick={() => {
-                            const siblings = cards.filter(
+                            const siblings = boardCards.filter(
                               (card) => card.status === status,
                             );
                             const previous =
@@ -387,7 +390,7 @@ export default function KanbanBoard({
                               moveTask(task.id, status, previous.id);
                           }}
                           disabled={
-                            cards.filter((card) => card.status === status)[0]
+                            boardCards.filter((card) => card.status === status)[0]
                               ?.id === task.id
                           }
                         >
@@ -398,7 +401,7 @@ export default function KanbanBoard({
                           className="icon-button"
                           aria-label={`Premakni ${task.title} navzdol`}
                           onClick={() => {
-                            const siblings = cards.filter(
+                            const siblings = boardCards.filter(
                               (card) => card.status === status,
                             );
                             const next =
@@ -410,7 +413,7 @@ export default function KanbanBoard({
                             if (next) moveTask(task.id, status, next.id, true);
                           }}
                           disabled={
-                            cards
+                            boardCards
                               .filter((card) => card.status === status)
                               .at(-1)?.id === task.id
                           }

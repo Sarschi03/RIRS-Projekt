@@ -1,8 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { projects } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 
 export default function ProfileProjects() {
+  const { data } = useAppData();
   return (
     <section
       className="profile-projects profile-block"
@@ -24,7 +25,7 @@ export default function ProfileProjects() {
             </tr>
           </thead>
           <tbody>
-            {projects.slice(0, 2).map((project) => (
+            {data.projects.slice(0, 2).map((project) => (
               <tr key={project.id}>
                 <td>
                   <Link to={`/projects/${project.id}`}>{project.name}</Link>
