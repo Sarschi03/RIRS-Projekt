@@ -1,16 +1,15 @@
-import { CalendarDays, Flag, Info } from "lucide-react";
+import { CalendarDays, Flag } from "lucide-react";
 import { tasks } from "../../data/mockData";
 import type { Task } from "../../types/ui";
-import { Avatar, Badge, Panel } from "../common/UI";
+import { Avatar, Badge } from "../common/UI";
 
 export default function TaskDetails({ task = tasks[3] }: { task?: Task }) {
   return (
-    <Panel
-      title="Podrobnosti naloge"
-      subtitle="Podrobnejši pregled dela"
-      action={<Info size={17} />}
-      className="task-details"
-    >
+    <section className="task-details" aria-label="Podrobnosti naloge">
+      <header className="task-details-heading">
+        <h2>Podrobnosti naloge</h2>
+        <p>Podrobnejši pregled dela</p>
+      </header>
       <h3>{task.title}</h3>
       <p>{task.description}</p>
       <dl className="detail-list">
@@ -50,6 +49,6 @@ export default function TaskDetails({ task = tasks[3] }: { task?: Task }) {
           ekipe in pripravite jasna navodila za naslednji pregled.
         </p>
       </div>
-    </Panel>
+    </section>
   );
 }

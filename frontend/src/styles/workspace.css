@@ -225,11 +225,32 @@
 }
 .dashboard-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 3fr) minmax(250px, .9fr);
   gap: 24px;
   margin-bottom: 24px;
   align-items: start;
 }
+.carousel-controls { display: flex; align-items: center; gap: 7px; }
+.carousel-controls button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid #e5e5e5; border-radius: 50%; background: #fff; color: #60717a; cursor: pointer; }
+.carousel-controls button:hover { border-color: #76aec470; background: #76aec418; }
+.carousel-controls button:focus-visible { outline: 2px solid var(--workit-blue-ink); outline-offset: 2px; }
+.project-carousel-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); gap: 16px; padding: 20px 23px 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.project-carousel-track::-webkit-scrollbar { display: none; }
+.project-carousel-card { min-width: 0; overflow: hidden; border: 1px solid #ececec; border-radius: 9px; background: #fff; scroll-snap-align: start; transition: transform .18s ease, box-shadow .18s ease; }
+.project-carousel-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px #355b6c12; }
+.project-carousel-card > img { display: block; width: 100%; height: 112px; object-fit: cover; }
+.project-carousel-card:nth-child(2n) > img { object-position: center 62%; }
+.project-carousel-body { padding: 15px; }
+.project-carousel-body > strong { display: block; font-size: 12px; font-weight: 550; }
+.project-carousel-body > span { display: block; min-height: 26px; margin-top: 6px; color: #8f8f8f; font-size: 9px; line-height: 1.5; }
+.project-carousel-progress { display: flex; justify-content: space-between; gap: 12px; margin: 16px 0 7px; color: #858585; font-size: 9px; }
+.project-carousel-progress strong { color: #56666d; font-weight: 550; }
+.project-carousel-members { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 15px; }
+.project-carousel-members > span { color: #8d8d8d; font-size: 9px; }
+.dashboard-project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 20px 23px 24px; }
+.dashboard-project-grid .project-card { min-width: 0; padding: 18px; }
+.dashboard-project-grid .project-card > p { min-height: 76px; font-size: 10px; }
+.dashboard-project-grid .project-title h2 { font-size: 13px; }
 .section-stack {
   display: flex;
   flex-direction: column;
@@ -733,11 +754,14 @@
   align-items: start;
 }
 .kanban-column {
-  background: #f1f1f1;
+  background: #76aec418;
+  border: 1px solid #76aec425;
   border-radius: 9px;
   padding: 13px 10px;
   min-height: 540px;
 }
+.kanban-column:nth-child(2) { background: #f6918e18; border-color: #f6918e28; }
+.kanban-column:nth-child(3) { background: #fc825e16; border-color: #fc825e26; }
 .kanban-column > header {
   display: flex;
   justify-content: space-between;
@@ -790,6 +814,17 @@
   border-radius: 7px;
   padding: 16px;
   box-shadow: 0 2px 2px #00000003;
+  border-top: 3px solid #76aec4;
+}
+.kanban-column:nth-child(2) .task-card { border-top-color: #f6918e; }
+.kanban-column:nth-child(3) .task-card { border-top-color: #fc825e; }
+.task-card-cover {
+  display: block;
+  width: 100%;
+  height: 86px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  background: #dedede;
 }
 .task-card-id {
   display: flex;
@@ -805,6 +840,7 @@
   gap: 4px;
   color: #878787;
 }
+.task-card .task-priority { padding: 4px 7px; border-radius: 999px; background: #f6918e1c; color: #80504e; }
 .task-card h3 {
   font-size: 12px;
   font-weight: 550;
@@ -848,16 +884,18 @@
 .task-detail-section {
   margin-top: 28px;
 }
-.task-details > .eyebrow,
+.task-details-heading,
 .task-details > h3,
 .task-details > p {
-  margin-left: 23px;
-  margin-right: 23px;
+  margin-left: 0;
+  margin-right: 0;
 }
-.task-details > .eyebrow {
-  display: block;
-  margin-top: 22px;
+.task-details-heading { margin-bottom: 22px; }
+.workspace .task-details-heading h2 {
+  font-size: 15px;
+  font-weight: 550;
 }
+.task-details-heading p { margin-top: 6px; color: #929292; font-size: 10px; }
 .task-details > h3 {
   font-size: 15px;
   font-weight: 500;
@@ -871,7 +909,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  padding: 0 23px;
+  padding: 0;
   margin: 24px 0;
 }
 .detail-list dt {
@@ -888,8 +926,8 @@
   min-height: 30px;
 }
 .instruction-note {
-  padding: 18px 23px;
-  background: #f8f8f8;
+  padding: 18px 0 0;
+  background: transparent;
   border-top: 1px solid #ededed;
 }
 .instruction-note h4 {
@@ -1209,6 +1247,7 @@
   }
 }
 @media (max-width: 900px) {
+  .dashboard-project-grid { grid-template-columns: 1fr; }
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

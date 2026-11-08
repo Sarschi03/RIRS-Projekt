@@ -152,13 +152,13 @@ export function StatCard({
   label: string;
   value: string;
   detail: string;
-  icon: ReactNode;
+  icon?: ReactNode;
 }) {
   return (
     <article className="stat-card">
       <div className="stat-top">
         <span>{label}</span>
-        <span className="stat-icon">{icon}</span>
+        {icon && <span className="stat-icon">{icon}</span>}
       </div>
       <strong>{value}</strong>
       <span className="stat-detail">{detail}</span>

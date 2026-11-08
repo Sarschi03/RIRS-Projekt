@@ -247,6 +247,16 @@
   padding-bottom: 16px;
   vertical-align: top;
 }
+.time-summary-item { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: start; gap: 13px; border-bottom: 1px solid #e8e8e8; }
+.time-summary-item:last-child { border-bottom: 0; }
+.time-summary-icon { display: flex; align-items: center; justify-content: center; padding-top: 10px; color: var(--workit-blue-ink); }
+.time-summary-item:nth-child(2) .time-summary-icon { color: #854a48; }
+.time-summary-list .stat-card { padding: 8px 0 19px; border: 0; border-radius: 0; background: transparent; }
+.time-table-toolbar { display: flex; justify-content: flex-end; padding: 0 23px 12px; }
+.time-entry-add { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid #76aec45c; border-radius: 50%; background: #76aec41c; color: var(--workit-blue-ink); cursor: pointer; }
+.time-entry-add:hover:not(:disabled) { background: #76aec435; }
+.time-entry-add:disabled { cursor: default; opacity: .48; }
+.time-entry-add:focus-visible { outline: 2px solid var(--workit-blue-ink); outline-offset: 2px; }
 .manual-entry-row input,
 .manual-entry-row select {
   min-width: 110px;

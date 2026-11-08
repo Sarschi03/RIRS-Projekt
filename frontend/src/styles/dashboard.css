@@ -8,7 +8,7 @@
 .page-hero-copy { flex: 1 1 280px; min-width: 0; max-width: 680px; }
 .workspace .page-hero h1 { font-size: clamp(27px, 2.7vw, 38px); font-weight: 550; color: #26363f; letter-spacing: -1.2px; text-wrap: balance; }
 .workspace .page-hero-copy p { color: #344550; font-size: 13px; line-height: 1.7; margin-top: 12px; }
-.page-hero-actions { max-width: 100%; }
+.page-hero-actions { position: absolute; top: 28px; right: 34px; max-width: calc(100% - 68px); }
 .page-hero-actions .heading-actions { flex-wrap: wrap; }
 .dashboard-date { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: #34424b; padding: 8px 11px; background: #ffffffb8; border: 1px solid #ffffff80; border-radius: 7px; }
 .workspace-profile-photo { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 50%; }
@@ -16,12 +16,14 @@
   :root { --workspace-cover-height: 225px; }
   .page-hero-content { padding: 25px; }
   .page-hero-meta { right: 25px; top: 24px; }
+  .page-hero-actions { top: 24px; right: 25px; max-width: calc(100% - 50px); }
 }
 @media (max-width: 640px) {
   :root { --workspace-cover-height: 250px; }
   .page-hero { margin-bottom: 20px; border-radius: 10px; }
   .page-hero-content { padding: 24px 18px; gap: 24px; }
   .page-hero-meta { position: static; }
+  .page-hero-actions { position: static; max-width: 100%; }
   .page-hero-row { align-items: flex-start; gap: 20px; }
   .page-hero-copy { flex-basis: 100%; }
   .workspace .page-hero h1 { font-size: 27px; letter-spacing: -.8px; }

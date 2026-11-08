@@ -14,8 +14,8 @@
 .workspace .day-calendar h2 { font-size: 17px; font-weight: 550; letter-spacing: -.3px; }
 .day-calendar-heading p { margin-top: 5px; color: #8b8b8b; font-size: 10px; }
 .calendar-controls { display: flex; gap: 7px; }
-.calendar-controls button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid #e7e7e7; border-radius: 50%; background: #fff; color: #60717a; cursor: pointer; transition: background .18s ease, border-color .18s ease, transform .18s ease; }
-.calendar-controls button:hover { border-color: #76aec470; background: #76aec418; transform: translateY(-1px); }
+.calendar-controls button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid transparent; border-radius: 50%; background: transparent; color: #60717a; cursor: pointer; transition: color .18s ease, transform .18s ease; }
+.calendar-controls button:hover { color: var(--workit-accent-ink); background: transparent; transform: translateY(-1px); }
 .calendar-controls button:focus-visible, .calendar-day:focus-visible { outline: 2px solid var(--workit-blue-ink); outline-offset: 2px; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(28px, 1fr)); gap: 8px; text-align: center; }
 .calendar-weekday { padding-bottom: 8px; color: #9a9a9a; font-size: 9px; font-weight: 600; }
@@ -23,32 +23,35 @@
 .calendar-day:hover { background: #76aec420; transform: translateY(-1px); }
 .calendar-day.is-today { border-color: var(--workit-accent); font-weight: 650; }
 .calendar-day.is-selected { background: var(--workit-accent); border-color: var(--workit-accent); color: #3e241c; font-weight: 650; box-shadow: 0 5px 15px #fc825e35; }
-.day-highlights { display: grid; grid-template-rows: repeat(2, 1fr); gap: 18px; }
-.day-highlight { min-height: 150px; padding: 25px; display: flex; align-items: flex-start; gap: 17px; border-radius: 10px; color: #31454e; }
-.day-highlight.is-blue { background: #76aec43d; }
-.day-highlight.is-pink { background: #f6918e42; }
-.day-highlight-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 auto; background: #ffffffa6; border-radius: 50%; color: var(--workit-blue-ink); }
-.day-highlight > div { min-width: 0; }
-.day-highlight div > span { display: block; margin-bottom: 10px; color: #65747a; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
-.day-highlight strong { display: block; font-size: 19px; font-weight: 550; letter-spacing: -.35px; }
-.day-highlight p { margin-top: 9px; color: #65747a; font-size: 10px; line-height: 1.5; }
+.day-highlights { min-width: 0; overflow: hidden; background: #fff; border: 1px solid #ececec; border-radius: 10px; }
+.day-highlights-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 21px 22px 16px; border-bottom: 1px solid #f0f0f0; }
+.workspace .day-highlights-heading h2 { font-size: 13px; font-weight: 600; letter-spacing: -.2px; }
+.day-highlights-heading p { margin-top: 4px; color: #949494; font-size: 10px; }
+.day-highlight-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 18px; }
+.day-highlight { min-width: 0; aspect-ratio: 1; border-radius: 8px; }
+.day-highlight.tone-1 { background: #76aec4; }
+.day-highlight.tone-2 { background: #f6918e; }
+.day-highlight.tone-3 { background: #fc825e; }
 .my-day-tasks { padding: 10px 0 0; }
 .my-day-tasks-heading { padding: 0 0 18px; }
 .workspace .my-day-tasks-heading h2 { font-size: 16px; font-weight: 550; letter-spacing: -.25px; }
 .my-day-tasks-heading p { margin-top: 6px; color: #8c8c8c; font-size: 10px; }
 .daily-list.simple { padding: 0 23px 12px; }
-.daily-list.simple .daily-task { padding: 17px 0; gap: 14px; }
+.daily-list.simple .daily-task { padding: 17px 0; gap: 14px; flex-wrap: nowrap; }
+.daily-list.simple .daily-task-title { flex: 0 1 58%; margin-left: clamp(35px, 14%, 120px); }
+.daily-task-radio { appearance: none; width: 20px; height: 20px; margin: 0 0 0 auto; flex: 0 0 auto; border: 2px solid var(--workit-accent); border-radius: 50%; background: transparent; cursor: pointer; }
+.daily-task-radio:checked { background: radial-gradient(circle, #3e241c 0 3px, var(--workit-accent) 4px); }
+.daily-task-radio:focus-visible { outline: 2px solid var(--workit-blue-ink); outline-offset: 3px; }
 .daily-list.simple .daily-task-title h3 { font-size: 12px; }
 .daily-list.simple .daily-task-title p { font-size: 10px; margin-top: 5px; }
 @media (max-width: 900px) {
   .my-day-overview { grid-template-columns: 1fr; }
-  .day-highlights { grid-template-columns: repeat(2, 1fr); grid-template-rows: none; }
 }
 @media (max-width: 560px) {
   .day-calendar { padding: 22px 15px; }
   .calendar-grid { gap: 4px; }
   .calendar-day { width: 30px; height: 30px; }
-  .day-highlights { grid-template-columns: 1fr; }
-  .day-highlight { min-height: 130px; }
+  .day-highlight-track { padding-inline: 15px; }
+  .daily-list.simple .daily-task-title { margin-left: 12px; flex-basis: auto; }
   .daily-list.simple { padding-inline: 15px; }
 }

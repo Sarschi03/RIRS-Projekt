@@ -1,8 +1,14 @@
 import { ArrowRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import type { RoleId } from "../../types/auth";
 
 export default function AuthForm({ signup = false }: { signup?: boolean }) {
   const navigate = useNavigate();
+  const { login, register } = useAuth();
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   return (
     <>
       <div className="auth-form-heading">
@@ -15,10 +21,31 @@ export default function AuthForm({ signup = false }: { signup?: boolean }) {
       </div>
       <form
         className="auth-form"
-        noValidate
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
-          navigate("/dashboard");
+          setError("");
+          setSubmitting(true);
+          const values = new FormData(event.currentTarget);
+          try {
+            if (signup) {
+              await register({
+                name: String(values.get("name") || ""),
+                email: String(values.get("email") || ""),
+                password: String(values.get("password") || ""),
+                role: String(values.get("role") || "employee") as RoleId,
+              });
+            } else {
+              await login(
+                String(values.get("email") || ""),
+                String(values.get("password") || ""),
+              );
+            }
+            navigate("/dashboard", { replace: true });
+          } catch (reason) {
+            setError(reason instanceof Error ? reason.message : "Prijava ni uspela.");
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
         {signup && (
@@ -30,6 +57,7 @@ export default function AuthForm({ signup = false }: { signup?: boolean }) {
               type="text"
               autoComplete="name"
               placeholder="Vaše ime in priimek"
+              required
             />
           </label>
         )}
@@ -41,6 +69,7 @@ export default function AuthForm({ signup = false }: { signup?: boolean }) {
             type="email"
             autoComplete="email"
             placeholder="ime@podjetje.si"
+            required
           />
         </label>
         <label htmlFor="password">
@@ -51,8 +80,20 @@ export default function AuthForm({ signup = false }: { signup?: boolean }) {
             type="password"
             autoComplete={signup ? "new-password" : "current-password"}
             placeholder={signup ? "Ustvarite geslo" : "Vnesite geslo"}
+            minLength={8}
+            required
           />
         </label>
+        {signup && (
+          <label htmlFor="role">
+            Vloga
+            <select id="role" name="role" defaultValue="employee" required>
+              <option value="employee">Zaposleni</option>
+              <option value="project-manager">Vodja projekta</option>
+              <option value="company-manager">Vodja podjetja</option>
+            </select>
+          </label>
+        )}
         {!signup && (
           <div className="auth-form-options">
             <label className="remember-label">
@@ -71,8 +112,9 @@ export default function AuthForm({ signup = false }: { signup?: boolean }) {
             Vaše delo. Vaša ekipa. Jasnejši pregled.
           </p>
         )}
-        <button type="submit" className="auth-submit">
-          {signup ? "Ustvari račun" : "Prijava"}
+        {error && <p className="auth-error" role="alert">{error}</p>}
+        <button type="submit" className="auth-submit" disabled={submitting}>
+          {submitting ? "Počakajte …" : signup ? "Ustvari račun" : "Prijava"}
           <ArrowRight size={17} />
         </button>
       </form>

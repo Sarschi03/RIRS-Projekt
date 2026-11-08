@@ -8,9 +8,11 @@ import {
 import { Button, PageHeading, Panel, StatCard } from "../components/common/UI";
 import TimeEntriesTable from "../components/time-tracking/TimeEntriesTable";
 import { useState } from "react";
+import useToday from "../hooks/useToday";
 
 export default function TimeTrackingPage() {
   const [timerPreview, setTimerPreview] = useState("Pripravljen");
+  const today = useToday();
   return (
     <>
       <PageHeading
@@ -18,19 +20,23 @@ export default function TimeTrackingPage() {
         description="Jasen pregled porabljenega časa."
       />
       <div className="time-top-grid">
-        <div className="section-stack">
-          <StatCard
-            label="Skupaj danes"
-            value="3 h 30 min"
-            detail="Sobota, 7. november"
-            icon={<Clock3 size={18} />}
-          />
-          <StatCard
-            label="Ta teden"
-            value="32 h 15 min"
-            detail="2.–8. november 2026"
-            icon={<CalendarDays size={18} />}
-          />
+        <div className="section-stack time-summary-list">
+          <div className="time-summary-item">
+            <span className="time-summary-icon" aria-hidden="true"><Clock3 size={19} /></span>
+            <StatCard
+              label="Skupaj danes"
+              value="3 h 30 min"
+              detail="Današnji delovni čas"
+            />
+          </div>
+          <div className="time-summary-item">
+            <span className="time-summary-icon" aria-hidden="true"><CalendarDays size={19} /></span>
+            <StatCard
+              label="Ta teden"
+              value="32 h 15 min"
+              detail={today.label}
+            />
+          </div>
         </div>
         <Panel
           title="Časovnik za delo"

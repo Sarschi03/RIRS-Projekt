@@ -1,7 +1,6 @@
 import {
   CalendarDays,
   ChevronLeft,
-  FileText,
   MoreHorizontal,
   Upload,
   UsersRound,
@@ -82,17 +81,6 @@ export default function ProjectDetailsPage() {
         <div className="summary-progress">
           <span>{project.progress}% zaključeno</span>
           <Progress value={project.progress} />
-        </div>
-      </div>
-      <div className="instruction-banner">
-        <FileText size={19} />
-        <div>
-          <strong>Sporočilo vodje projekta</strong>
-          <p>
-            Poskrbite za preprosto in dostopno rešitev. Pred dokončnim
-            oblikovanjem delite svoje predloge ter izhajajte iz dogovorjenih
-            vizualnih smernic.
-          </p>
         </div>
       </div>
       <PageTabs

@@ -3,10 +3,12 @@ import { NavLink } from "react-router-dom";
 import { Menu, Settings, LogOut } from "lucide-react";
 import { roleNavigation } from "../../data/roleNavigation";
 import { useMockUser } from "../../context/MockUserContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
   const { user } = useMockUser();
+  const { logout } = useAuth();
   const navItems = roleNavigation.filter((item) =>
     item.roles.includes(user.roleId),
   );
@@ -66,6 +68,7 @@ export default function Sidebar() {
           title="Odjava"
           aria-label="Odjava"
           className="sidebar-link"
+          onClick={logout}
         >
           <span className="sidebar-icon">
             <LogOut size={19} />
