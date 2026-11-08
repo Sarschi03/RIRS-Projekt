@@ -1,4 +1,4 @@
-import { FileText, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 import type { Project, Task } from "../../types/ui";
 import {
   Avatar,
@@ -8,9 +8,8 @@ import {
   Panel,
   Progress,
 } from "../common/UI";
-import { people } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 import TaskDetails from "../tasks/TaskDetails";
-import { usePreview } from "../../context/PreviewContext";
 
 export function ProjectOverview({
   project,
@@ -19,6 +18,7 @@ export function ProjectOverview({
   project: Project;
   task?: Task;
 }) {
+  const { data } = useAppData();
   return (
     <div className="project-overview-grid">
       <Panel
@@ -60,7 +60,7 @@ export function ProjectOverview({
               <div className="project-team-role" key={initials}>
                 <Avatar initials={initials} />
                 <span>
-                  {people.find((person) => person.initials === initials)
+                  {data.people.find((person) => person.initials === initials)
                     ?.name || initials}
                 </span>
                 <Badge>{index === 0 ? "Vodja projekta" : "Sodelavec"}</Badge>
@@ -81,7 +81,6 @@ export function ProjectOverview({
 }
 
 export function ProjectFiles({ project }: { project: Project }) {
-  const { open } = usePreview();
   return (
     <Panel
       title="Datoteke projekta"
@@ -94,28 +93,7 @@ export function ProjectFiles({ project }: { project: Project }) {
       }
     >
       <div className="project-files">
-        {[
-          "Projektna izhodišča.pdf",
-          "Vizualne reference.pdf",
-          "Kontrolni seznam.pdf",
-        ].map((file, index) => (
-          <button
-            type="button"
-            className="project-file"
-            key={file}
-            onClick={() => open({ kind: "file-preview", project, title: file })}
-          >
-            <FileText size={24} />
-            <span>
-              <strong>{file}</strong>
-              <small>
-                Referenčno gradivo · {index + 1}{" "}
-                {index === 0 ? "stran" : "strani"}
-              </small>
-            </span>
-            <span>Predogled</span>
-          </button>
-        ))}
+        <p className="empty-preview">Projekt še nima naloženih datotek.</p>
       </div>
     </Panel>
   );

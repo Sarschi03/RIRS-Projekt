@@ -1,4 +1,5 @@
 export interface Person {
+  id: string;
   name: string;
   initials: string;
   email: string;
@@ -20,6 +21,8 @@ export interface Project {
   start: string;
   end: string;
   tasks: number;
+  managerId: string;
+  managerName: string;
 }
 
 export interface Task {
@@ -34,4 +37,10 @@ export interface Task {
   deadline: string;
   duration: string;
   comments: number;
+  databaseId: number;
+  projectId: string;
+  instructions?: string;
 }
+
+export interface TimeEntry { id: number; date: string; dateTime: string; project: string; task: string; start: string; end: string; duration: string; durationMinutes: number; }
+export interface DailyTask { id: number; title: string; description: string; project: string; time: string; duration: string; priority: string; done: boolean; }

@@ -1,13 +1,15 @@
 import type { PreviewAction } from "../../types/preview";
-import { people, projects, tasks } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 import UploadField from "./UploadField";
 import ProjectMembersField from "../projects/ProjectMembersField";
 
 function ProjectSelect({ value }: { value?: string }) {
+  const { data } = useAppData();
+  const projects = data.projects;
   return (
     <label>
       Projekt
-      <select name="project" defaultValue={value || projects[0].name}>
+      <select name="project" defaultValue={value || projects[0]?.name || ""}>
         {projects.map((project) => (
           <option key={project.id}>{project.name}</option>
         ))}
@@ -16,10 +18,12 @@ function ProjectSelect({ value }: { value?: string }) {
   );
 }
 function PersonSelect({ value }: { value?: string }) {
+  const { data } = useAppData();
+  const people = data.people;
   return (
     <label>
       Dodeljeno
-      <select name="assignee" defaultValue={value || people[0].name}>
+      <select name="assignee" defaultValue={value || people[0]?.name || ""}>
         {people.map((person) => (
           <option key={person.email}>{person.name}</option>
         ))}
@@ -28,6 +32,8 @@ function PersonSelect({ value }: { value?: string }) {
   );
 }
 function TaskSelect() {
+  const { data } = useAppData();
+  const tasks = data.tasks;
   return (
     <label>
       Naloga
@@ -41,6 +47,8 @@ function TaskSelect() {
 }
 
 export default function PreviewFields({ action }: { action: PreviewAction }) {
+  const { data } = useAppData();
+  const { projects } = data;
   switch (action.kind) {
     case "daily-task":
       return (
@@ -305,7 +313,7 @@ export default function PreviewFields({ action }: { action: PreviewAction }) {
         <>
           <label>
             Začetek tedna
-            <input type="date" defaultValue="2026-11-02" />
+            <input type="date" />
           </label>
         </>
       );

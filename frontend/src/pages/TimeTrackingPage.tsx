@@ -9,10 +9,15 @@ import { Button, PageHeading, Panel, StatCard } from "../components/common/UI";
 import TimeEntriesTable from "../components/time-tracking/TimeEntriesTable";
 import { useState } from "react";
 import useToday from "../hooks/useToday";
+import { useAppData } from "../context/DataContext";
 
 export default function TimeTrackingPage() {
   const [timerPreview, setTimerPreview] = useState("Pripravljen");
   const today = useToday();
+  const { data } = useAppData();
+  const totalMinutes = data.timeEntries.reduce((sum, entry) => sum + entry.durationMinutes, 0);
+  const todayMinutes = data.timeEntries.filter((entry) => entry.dateTime.slice(0, 10) === today.dateTime).reduce((sum, entry) => sum + entry.durationMinutes, 0);
+  const label = (minutes: number) => `${Math.floor(minutes / 60)} h ${minutes % 60} min`;
   return (
     <>
       <PageHeading
@@ -25,7 +30,7 @@ export default function TimeTrackingPage() {
             <span className="time-summary-icon" aria-hidden="true"><Clock3 size={19} /></span>
             <StatCard
               label="Skupaj danes"
-              value="3 h 30 min"
+              value={label(todayMinutes)}
               detail="Današnji delovni čas"
             />
           </div>
@@ -33,7 +38,7 @@ export default function TimeTrackingPage() {
             <span className="time-summary-icon" aria-hidden="true"><CalendarDays size={19} /></span>
             <StatCard
               label="Ta teden"
-              value="32 h 15 min"
+              value={label(totalMinutes)}
               detail={today.label}
             />
           </div>
@@ -45,10 +50,9 @@ export default function TimeTrackingPage() {
         >
           <label className="timer-select">
             Trenutna naloga
-            <select defaultValue="overview">
-              <option value="overview">Oblikovanje pregleda projekta</option>
-              <option>Načrtovanje uvajanja zaposlenih</option>
-              <option>Pregled gradiv za nove sodelavce</option>
+            <select defaultValue="">
+              <option value="" disabled>Izberite nalogo</option>
+              {data.tasks.map((task) => <option key={task.id} value={task.databaseId}>{task.title}</option>)}
             </select>
           </label>
           <div
@@ -89,7 +93,7 @@ export default function TimeTrackingPage() {
       <Panel
         title="Časovni zapisi"
         subtitle="Pregled opravljenega dela"
-        action={<span className="muted small">5 zapisov</span>}
+        action={<span className="muted small">{data.timeEntries.length} zapisov</span>}
       >
         <TimeEntriesTable />
       </Panel>

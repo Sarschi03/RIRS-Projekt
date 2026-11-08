@@ -6,7 +6,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { projects, projectTasks } from "../data/mockData";
+import { useAppData } from "../context/DataContext";
 import {
   AvatarGroup,
   Badge,
@@ -26,8 +26,11 @@ import {
 export default function ProjectDetailsPage() {
   const [tab, setTab] = useState("board");
   const { id } = useParams();
+  const { data, loading } = useAppData();
+  const projects = data.projects;
   const project = projects.find((item) => item.id === id);
-  const items = projectTasks[id || ""] || [];
+  const items = data.tasks.filter((task) => task.projectId === id);
+  if (loading) return <PageHeading title="Nalaganje projekta …" description="Pridobivanje podatkov iz baze." />;
   if (!project)
     return (
       <>

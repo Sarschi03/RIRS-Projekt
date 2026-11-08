@@ -1,7 +1,6 @@
 import { ChevronRight, UserRound, Workflow } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import RoleSwitcher from "./RoleSwitcher";
-import { useMockUser } from "../../context/MockUserContext";
+import { useAuth } from "../../context/AuthContext";
 
 const names: Record<string, string> = {
   dashboard: "Nadzorna plošča",
@@ -17,7 +16,7 @@ const names: Record<string, string> = {
 };
 
 export default function WorkspaceHeader() {
-  const { profileImage, user } = useMockUser();
+  const { profileImage, user } = useAuth();
   const section = useLocation().pathname.split("/")[1];
   return (
     <header className="workspace-topbar">
@@ -28,7 +27,6 @@ export default function WorkspaceHeader() {
         <strong>{names[section] || "Pregled"}</strong>
       </div>
       <div className="workspace-role-controls">
-        <RoleSwitcher />
         {section !== "profile" && (
           <div className="workspace-profile">
             <Link
@@ -37,7 +35,7 @@ export default function WorkspaceHeader() {
               aria-label="Odpri svoj profil"
               title="Odpri svoj profil"
             >
-              {profileImage ? <img className="workspace-profile-photo" src={profileImage} alt={`Profilna slika: ${user.name}`} /> : <UserRound size={21} />}
+              {profileImage ? <img className="workspace-profile-photo" src={profileImage} alt={`Profilna slika: ${user?.name || ""}`} /> : <UserRound size={21} />}
             </Link>
           </div>
         )}

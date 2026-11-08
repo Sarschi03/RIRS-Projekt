@@ -1,9 +1,12 @@
 import { CalendarDays, Flag } from "lucide-react";
-import { tasks } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 import type { Task } from "../../types/ui";
 import { Avatar, Badge } from "../common/UI";
 
-export default function TaskDetails({ task = tasks[3] }: { task?: Task }) {
+export default function TaskDetails({ task }: { task?: Task }) {
+  const { data } = useAppData();
+  task = task || data.tasks[0];
+  if (!task) return null;
   return (
     <section className="task-details" aria-label="Podrobnosti naloge">
       <header className="task-details-heading">

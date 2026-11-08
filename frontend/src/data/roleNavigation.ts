@@ -7,15 +7,15 @@ import {
   UsersRound,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { MockRole } from "../types/mockUser";
+import type { RoleId } from "../types/auth";
 
-const allRoles: MockRole[] = ["employee", "project-manager", "company-manager"];
+const allRoles: RoleId[] = ["employee", "project-manager", "company-manager"];
 
 export const roleNavigation: {
   label: string;
   path: string;
   icon: LucideIcon;
-  roles: MockRole[];
+  roles: RoleId[];
 }[] = [
   {
     label: "Nadzorna plošča",

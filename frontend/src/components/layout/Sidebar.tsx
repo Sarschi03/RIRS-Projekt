@@ -2,15 +2,13 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Settings, LogOut } from "lucide-react";
 import { roleNavigation } from "../../data/roleNavigation";
-import { useMockUser } from "../../context/MockUserContext";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
-  const { user } = useMockUser();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navItems = roleNavigation.filter((item) =>
-    item.roles.includes(user.roleId),
+    user ? item.roles.includes(user.roleId) : false,
   );
 
   return (

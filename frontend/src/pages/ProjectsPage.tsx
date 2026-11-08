@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Button, FilterBar, PageHeading } from "../components/common/UI";
 import PageTabs from "../components/common/PageTabs";
 import ProjectCard from "../components/projects/ProjectCard";
-import { projects } from "../data/mockData";
+import { useAppData } from "../context/DataContext";
 
 export default function ProjectsPage() {
+  const { data, loading, error } = useAppData();
+  const projects = data.projects;
   const [tab, setTab] = useState("all");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("Vsa stanja");
@@ -35,9 +37,9 @@ export default function ProjectsPage() {
         value={tab}
         onChange={setTab}
         options={[
-          { value: "all", label: "Vsi projekti", count: 4 },
-          { value: "active", label: "Aktivni", count: 3 },
-          { value: "completed", label: "Zaključeni", count: 1 },
+          { value: "all", label: "Vsi projekti", count: projects.length },
+          { value: "active", label: "Aktivni", count: projects.filter((item) => item.status !== "Zaključeno").length },
+          { value: "completed", label: "Zaključeni", count: projects.filter((item) => item.status === "Zaključeno").length },
         ]}
       />
       <FilterBar
@@ -51,6 +53,8 @@ export default function ProjectsPage() {
           <ProjectCard key={project.id} project={project} />
         ))}
       </div>
+      {loading && <p className="empty-preview">Nalaganje projektov …</p>}
+      {error && <p className="empty-preview" role="alert">{error}</p>}
       {!visible.length && (
         <p className="empty-preview">
           Noben projekt ne ustreza izbranemu pogledu.

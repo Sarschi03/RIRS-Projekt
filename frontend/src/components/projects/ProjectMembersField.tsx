@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { people } from "../../data/mockData";
+import { useAppData } from "../../context/DataContext";
 import { Avatar } from "../common/UI";
 
 export default function ProjectMembersField({
@@ -7,6 +7,8 @@ export default function ProjectMembersField({
 }: {
   initialMembers?: string[];
 }) {
+  const { data } = useAppData();
+  const people = data.people;
   const [selected, setSelected] = useState<string[]>(initialMembers);
   return (
     <fieldset className="project-members-field">

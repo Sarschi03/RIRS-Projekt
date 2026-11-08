@@ -2,11 +2,11 @@ import { Camera, Mail } from "lucide-react";
 import { useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import { Avatar } from "../common/UI";
-import { useMockUser } from "../../context/MockUserContext";
+import { useAuth } from "../../context/AuthContext";
 import gradient from '../../assets/dashboard-gradient.png';
 
 export default function ProfileHeader() {
-  const { user, profileImage, setProfileImage } = useMockUser();
+  const { user, profileImage, setProfileImage } = useAuth();
   const input = useRef<HTMLInputElement>(null);
   const [feedback, setFeedback] = useState<{ userId: string; text: string; error: boolean } | null>(null);
 
@@ -14,6 +14,7 @@ export default function ProfileHeader() {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
+    if (!user) return;
     const showError = (text: string) => setFeedback({ userId: user.id, text, error: true });
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
       showError('Izberite sliko JPG, PNG ali WebP.'); return;
@@ -34,6 +35,7 @@ export default function ProfileHeader() {
       reader.readAsDataURL(file);
     } catch { showError('Slike ni mogoče prebrati. Poskusite z drugo datoteko.'); }
   }
+  if (!user) return null;
   return (
     <section className="profile-hero" aria-label="Vaš profil">
       <div className="profile-cover" aria-hidden="true"><img className="profile-cover-image" src={gradient} alt="" /></div>
