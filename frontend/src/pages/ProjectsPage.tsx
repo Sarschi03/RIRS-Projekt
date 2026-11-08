@@ -1,40 +1,61 @@
+import { useState } from "react";
 import { Button, FilterBar, PageHeading } from "../components/common/UI";
+import PageTabs from "../components/common/PageTabs";
 import ProjectCard from "../components/projects/ProjectCard";
 import { projects } from "../data/mockData";
 
 export default function ProjectsPage() {
+  const [tab, setTab] = useState("all");
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("Vsa stanja");
+  const visible = projects.filter(
+    (project) =>
+      (tab === "all" ||
+        (tab === "completed"
+          ? project.status === "Zaključeno"
+          : project.status !== "Zaključeno")) &&
+      (status === "Vsa stanja" || project.status === status) &&
+      `${project.name} ${project.description}`
+        .toLowerCase()
+        .includes(query.toLowerCase()),
+  );
   return (
     <>
       <PageHeading
-        eyebrow="WORK, WITH A SHARED PURPOSE"
-        title="Projects"
-        description="A home for the things you’re building together."
+        title="Projekti"
+        description="Prostor za projekte, ki jih ustvarjate skupaj."
         action={
-          <Button primary icon>
-            Create project
+          <Button primary icon action="project">
+            Ustvari projekt
           </Button>
         }
       />
-      <div className="page-tabs">
-        <span className="selected">
-          All projects <b>4</b>
-        </span>
-        <span>
-          Active <b>3</b>
-        </span>
-        <span>
-          Completed <b>1</b>
-        </span>
-      </div>
-      <FilterBar />
+      <PageTabs
+        label="Pogledi projektov"
+        value={tab}
+        onChange={setTab}
+        options={[
+          { value: "all", label: "Vsi projekti", count: 4 },
+          { value: "active", label: "Aktivni", count: 3 },
+          { value: "completed", label: "Zaključeni", count: 1 },
+        ]}
+      />
+      <FilterBar
+        query={query}
+        onSearch={setQuery}
+        status={status}
+        onStatusChange={setStatus}
+      />
       <div className="projects-grid">
-        {projects.map((project) => (
+        {visible.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
       </div>
-      <p className="page-endnote">
-        All caught up. A little focus goes a long way.
-      </p>
+      {!visible.length && (
+        <p className="empty-preview">
+          Noben projekt ne ustreza izbranemu pogledu.
+        </p>
+      )}
     </>
   );
 }

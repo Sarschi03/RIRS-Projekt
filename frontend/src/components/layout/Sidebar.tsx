@@ -1,34 +1,18 @@
-
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  Workflow,
-  Menu,
-  LayoutDashboard,
-  FolderKanban,
-  Clock3,
-  ListTodo,
-  ChartNoAxesCombined,
-  Settings,
-} from "lucide-react";
-
-const navItems = [
-  { label: "Nadzorna plošča", path: "/dashboard", icon: LayoutDashboard },
-  { label: "Projekti", path: "/projects", icon: FolderKanban },
-  { label: "Evidenca časa", path: "/time-tracking", icon: Clock3 },
-  { label: "Moj dan", path: "/my-day", icon: ListTodo },
-  { label: "Vodstvo", path: "/management", icon: ChartNoAxesCombined },
-];
+import { Menu, Settings, LogOut } from "lucide-react";
+import { roleNavigation } from "../../data/roleNavigation";
+import { useMockUser } from "../../context/MockUserContext";
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
+  const { user } = useMockUser();
+  const navItems = roleNavigation.filter((item) =>
+    item.roles.includes(user.roleId),
+  );
 
   return (
     <aside className={`sidebar ${expanded ? "expanded" : ""}`}>
-      <div className="sidebar-logo">
-        <Workflow size={24} />
-      </div>
-
       <button
         type="button"
         className="sidebar-toggle"
@@ -37,10 +21,14 @@ export default function Sidebar() {
         aria-expanded={expanded}
         aria-controls="sidebar-navigation"
       >
-        <Menu size={22} />
+        <Menu size={20} />
       </button>
 
-      <nav id="sidebar-navigation" className="sidebar-nav" aria-label="Glavna navigacija">
+      <nav
+        id="sidebar-navigation"
+        className="sidebar-nav"
+        aria-label="Glavna navigacija"
+      >
         {navItems.map(({ label, path, icon: Icon }) => (
           <NavLink
             key={path}
@@ -51,14 +39,39 @@ export default function Sidebar() {
               `sidebar-link ${isActive ? "active" : ""}`
             }
           >
-            <Icon size={21} />
+            <span className="sidebar-icon">
+              <Icon size={19} />
+            </span>
             {expanded && <span>{label}</span>}
           </NavLink>
         ))}
       </nav>
 
       <div className="sidebar-bottom">
-        <Settings size={21} />
+        <NavLink
+          to="/settings"
+          title="Nastavitve"
+          aria-label="Nastavitve"
+          className={({ isActive }) =>
+            `sidebar-link ${isActive ? "active" : ""}`
+          }
+        >
+          <span className="sidebar-icon">
+            <Settings size={19} />
+          </span>
+          {expanded && <span>Nastavitve</span>}
+        </NavLink>
+        <NavLink
+          to="/login"
+          title="Odjava"
+          aria-label="Odjava"
+          className="sidebar-link"
+        >
+          <span className="sidebar-icon">
+            <LogOut size={19} />
+          </span>
+          {expanded && <span>Odjava</span>}
+        </NavLink>
       </div>
     </aside>
   );

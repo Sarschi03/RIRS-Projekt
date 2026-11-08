@@ -1,0 +1,31 @@
+:root { --workspace-cover-height: 235px; }
+.page-hero { position: relative; min-height: var(--workspace-cover-height); width: 100%; margin-bottom: 26px; overflow: hidden; border-radius: 14px; background: #76aec4; }
+.page-hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }
+.page-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #ffffff30, #ffffff10 50%, transparent); pointer-events: none; }
+.page-hero-content { position: relative; z-index: 1; min-height: inherit; padding: 34px; display: flex; flex-direction: column; justify-content: center; }
+.page-hero-meta { position: absolute; top: 28px; right: 34px; }
+.page-hero-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.page-hero-copy { flex: 1 1 280px; min-width: 0; max-width: 680px; }
+.workspace .page-hero h1 { font-size: clamp(27px, 2.7vw, 38px); font-weight: 550; color: #26363f; letter-spacing: -1.2px; text-wrap: balance; }
+.workspace .page-hero-copy p { color: #344550; font-size: 13px; line-height: 1.7; margin-top: 12px; }
+.page-hero-actions { max-width: 100%; }
+.page-hero-actions .heading-actions { flex-wrap: wrap; }
+.dashboard-date { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: #34424b; padding: 8px 11px; background: #ffffffb8; border: 1px solid #ffffff80; border-radius: 7px; }
+.workspace-profile-photo { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 50%; }
+@media (max-width: 900px) {
+  :root { --workspace-cover-height: 225px; }
+  .page-hero-content { padding: 25px; }
+  .page-hero-meta { right: 25px; top: 24px; }
+}
+@media (max-width: 640px) {
+  :root { --workspace-cover-height: 250px; }
+  .page-hero { margin-bottom: 20px; border-radius: 10px; }
+  .page-hero-content { padding: 24px 18px; gap: 24px; }
+  .page-hero-meta { position: static; }
+  .page-hero-row { align-items: flex-start; gap: 20px; }
+  .page-hero-copy { flex-basis: 100%; }
+  .workspace .page-hero h1 { font-size: 27px; letter-spacing: -.8px; }
+  .workspace .page-hero-copy p { font-size: 11px; margin-top: 11px; }
+  .dashboard-date { font-size: 10px; padding: 7px 9px; }
+  .page-hero::after { background: linear-gradient(90deg, #ffffff85, #ffffff30); }
+}

@@ -1,22 +1,31 @@
 import { MoreHorizontal } from "lucide-react";
 import { people } from "../../data/mockData";
 import { Avatar, Badge } from "../common/UI";
+import { usePreview } from "../../context/PreviewContext";
+import type { Person } from "../../types/ui";
 
-export default function EmployeeTable({ users = false }: { users?: boolean }) {
+export default function EmployeeTable({
+  users = false,
+  members = people,
+}: {
+  users?: boolean;
+  members?: Person[];
+}) {
+  const { open } = usePreview();
   return (
     <div className="table-scroll">
       <table>
         <thead>
           <tr>
-            <th>Team member</th>
-            <th>{users ? "Role" : "Projects"}</th>
-            <th>{users ? "Projects" : "Assigned"}</th>
-            <th>{users ? "Status" : "Completed"}</th>
-            <th>{users ? "Actions" : "Hours recorded"}</th>
+            <th>Član ekipe</th>
+            <th>{users ? "Vloga" : "Projekti"}</th>
+            <th>{users ? "Projekti" : "Dodeljeno"}</th>
+            <th>{users ? "Stanje" : "Zaključeno"}</th>
+            <th>{users ? "Dejanja" : "Zabeležene ure"}</th>
           </tr>
         </thead>
         <tbody>
-          {people.map((person) => (
+          {members.map((person) => (
             <tr key={person.email}>
               <td>
                 <div className="person-cell">
@@ -39,7 +48,8 @@ export default function EmployeeTable({ users = false }: { users?: boolean }) {
                   <button
                     type="button"
                     className="icon-button"
-                    aria-label={`Edit ${person.name}`}
+                    aria-label={`Uredi ${person.name}`}
+                    onClick={() => open({ kind: "employee", person })}
                   >
                     <MoreHorizontal size={18} />
                   </button>
@@ -51,6 +61,11 @@ export default function EmployeeTable({ users = false }: { users?: boolean }) {
           ))}
         </tbody>
       </table>
+      {members.length === 0 && (
+        <p className="empty-preview">
+          Noben član ekipe ne ustreza izbranemu pogledu.
+        </p>
+      )}
     </div>
   );
 }

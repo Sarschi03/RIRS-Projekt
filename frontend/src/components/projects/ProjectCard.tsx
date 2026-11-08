@@ -18,10 +18,10 @@ export default function ProjectCard({ project }: { project: Project }) {
       </Link>
       <p>{project.description}</p>
       <div className="progress-label">
-        <span>Project progress</span>
+        <span>Napredek projekta</span>
         <strong>{project.progress}%</strong>
       </div>
-      <Progress value={project.progress} label={`${project.name} progress`} />
+      <Progress value={project.progress} label={`${project.name} – napredek`} />
       <div className="project-dates">
         <span>
           <CalendarDays size={14} />
@@ -33,7 +33,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <AvatarGroup members={project.members} />
         <span>
           <ListTodo size={15} />
-          {project.tasks} tasks
+          {project.tasks} nalog
         </span>
       </footer>
     </article>

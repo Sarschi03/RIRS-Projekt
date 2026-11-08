@@ -1,93 +1,88 @@
-import { ArrowRight, Workflow } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AuthForm({ signup = false }: { signup?: boolean }) {
+  const navigate = useNavigate();
   return (
     <>
-      <span className="auth-form-logo">
-        <Workflow size={25} />
-      </span>
       <div className="auth-form-heading">
-        <span className="eyebrow">
-          {signup ? "A FRESH START" : "YOUR WORK, IN ONE PLACE"}
-        </span>
-        <h1>{signup ? "Make room for good work." : "Welcome back."}</h1>
+        <h1>{signup ? "Prostor za dobro delo." : "Dobrodošli nazaj."}</h1>
         <p>
           {signup
-            ? "Create your account. Find a little more focus."
-            : "A new day. A clearer view. Let’s get you settled in."}
+            ? "Ustvarite račun za bolj zbrano delo."
+            : "Nov dan. Jasnejši pregled. Začnimo."}
         </p>
       </div>
       <form
         className="auth-form"
         noValidate
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+          navigate("/dashboard");
+        }}
       >
         {signup && (
           <label htmlFor="full-name">
-            Full name
+            Ime in priimek
             <input
               id="full-name"
               name="name"
               type="text"
               autoComplete="name"
-              placeholder="Your full name"
+              placeholder="Vaše ime in priimek"
             />
           </label>
         )}
         <label htmlFor="email">
-          Work email
+          Službeni e-naslov
           <input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
-            placeholder="you@company.com"
+            placeholder="ime@podjetje.si"
           />
         </label>
         <label htmlFor="password">
-          Password
+          Geslo
           <input
             id="password"
             name="password"
             type="password"
             autoComplete={signup ? "new-password" : "current-password"}
-            placeholder={signup ? "Create a password" : "Enter your password"}
+            placeholder={signup ? "Ustvarite geslo" : "Vnesite geslo"}
           />
         </label>
         {!signup && (
           <div className="auth-form-options">
             <label className="remember-label">
               <input type="checkbox" />
-              Remember me
+              Zapomni si me
             </label>
-            <button type="button" className="plain-button">
-              Forgot password?
-            </button>
+            <Link to="/forgot-password" className="plain-button">
+              Pozabljeno geslo?
+            </Link>
           </div>
         )}
         {signup && (
           <p className="auth-consent">
-            A shared space for a more organized workday.
+            Skupen prostor za bolj organiziran delovnik.
             <br />
-            Your work. Your people. A little more clarity.
+            Vaše delo. Vaša ekipa. Jasnejši pregled.
           </p>
         )}
-        <button type="button" className="auth-submit">
-          {signup ? "Create account" : "Log in"}
+        <button type="submit" className="auth-submit">
+          {signup ? "Ustvari račun" : "Prijava"}
           <ArrowRight size={17} />
         </button>
       </form>
       <div className="auth-switch">
-        <span>{signup ? "Already part of the team?" : "New to workIT?"}</span>
+        <span>{signup ? "Ste že del ekipe?" : "Ste novi v workIT?"}</span>
         <Link to={signup ? "/login" : "/signup"}>
-          {signup ? "Log in" : "Create an account"}
+          {signup ? "Prijava" : "Ustvarite račun"}
           <ArrowRight size={13} />
         </Link>
       </div>
-      <p className="auth-preview-note">
-        Design preview — account actions are not connected.
-      </p>
     </>
   );
 }

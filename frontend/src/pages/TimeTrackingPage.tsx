@@ -4,90 +4,86 @@ import {
   Pause,
   Play,
   Square,
-  ChevronDown,
 } from "lucide-react";
 import { Button, PageHeading, Panel, StatCard } from "../components/common/UI";
-import HoursChart from "../components/common/HoursChart";
 import TimeEntriesTable from "../components/time-tracking/TimeEntriesTable";
+import { useState } from "react";
 
 export default function TimeTrackingPage() {
+  const [timerPreview, setTimerPreview] = useState("Pripravljen");
   return (
     <>
       <PageHeading
-        eyebrow="MAKE ROOM FOR FOCUSED WORK"
-        title="Time tracking"
-        description="A clearer picture of where your time goes."
-        action={<Button icon>Manual entry</Button>}
+        title="Evidenca časa"
+        description="Jasen pregled porabljenega časa."
       />
       <div className="time-top-grid">
         <div className="section-stack">
           <StatCard
-            label="Today’s total"
-            value="3h 30m"
-            detail="Saturday, November 7"
+            label="Skupaj danes"
+            value="3 h 30 min"
+            detail="Sobota, 7. november"
             icon={<Clock3 size={18} />}
           />
           <StatCard
-            label="This week"
-            value="32h 15m"
-            detail="November 2 – 8, 2026"
+            label="Ta teden"
+            value="32 h 15 min"
+            detail="2.–8. november 2026"
             icon={<CalendarDays size={18} />}
           />
         </div>
         <Panel
-          title="Focus timer"
-          subtitle="One task. A little space to focus."
+          title="Časovnik za delo"
+          subtitle="Ena naloga. Čas za zbrano delo."
           className="timer-panel"
         >
           <label className="timer-select">
-            Working on
+            Trenutna naloga
             <select defaultValue="overview">
-              <option value="overview">Design the project overview</option>
-              <option>Map the onboarding journey</option>
-              <option>Review welcome materials</option>
+              <option value="overview">Oblikovanje pregleda projekta</option>
+              <option>Načrtovanje uvajanja zaposlenih</option>
+              <option>Pregled gradiv za nove sodelavce</option>
             </select>
           </label>
           <div
             className="timer-display"
-            aria-label="Timer: zero hours, zero minutes, zero seconds"
+            aria-label="Časovnik: nič ur, nič minut, nič sekund"
           >
             00<span>:</span>00<span>:</span>00
           </div>
           <div className="timer-buttons">
-            <Button primary>
+            <Button
+              primary
+              aria-pressed={timerPreview === "V teku"}
+              onClick={() => setTimerPreview("V teku")}
+            >
               <Play size={14} />
-              Start
+              Zaženi
             </Button>
-            <Button>
+            <Button
+              aria-pressed={timerPreview === "Začasno ustavljen"}
+              onClick={() => setTimerPreview("Začasno ustavljen")}
+            >
               <Pause size={14} />
-              Pause
+              Premor
             </Button>
-            <Button>
+            <Button
+              aria-pressed={timerPreview === "Ustavljen"}
+              onClick={() => setTimerPreview("Ustavljen")}
+            >
               <Square size={13} />
-              Stop
+              Ustavi
             </Button>
           </div>
-          <span className="timer-note">
-            Timer preview · controls are visual only
+          <span className="timer-note" role="status">
+            {timerPreview}
           </span>
         </Panel>
       </div>
       <Panel
-        title="Weekly overview"
-        subtitle="A steady rhythm, day by day"
-        action={
-          <Button>
-            This week
-            <ChevronDown size={14} />
-          </Button>
-        }
-      >
-        <HoursChart />
-      </Panel>
-      <Panel
-        title="Time entries"
-        subtitle="A record of focused moments"
-        action={<span className="muted small">5 entries</span>}
+        title="Časovni zapisi"
+        subtitle="Pregled opravljenega dela"
+        action={<span className="muted small">5 zapisov</span>}
       >
         <TimeEntriesTable />
       </Panel>

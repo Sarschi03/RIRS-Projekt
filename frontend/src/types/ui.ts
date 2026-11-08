@@ -2,12 +2,12 @@ export interface Person {
   name: string;
   initials: string;
   email: string;
-  role: "Employee" | "Project Manager" | "Company Manager";
+  role: "Zaposleni" | "Vodja projekta" | "Vodja podjetja";
   projects: string;
   assigned: number;
   completed: number;
   hours: string;
-  status: "Active" | "Invited";
+  status: "Aktiven" | "Povabljen";
 }
 
 export interface Project {
@@ -27,8 +27,8 @@ export interface Task {
   title: string;
   description: string;
   project: string;
-  status: "To Do" | "In Progress" | "Done";
-  priority: "High" | "Medium" | "Low";
+  status: "Za opraviti" | "V teku" | "Opravljeno";
+  priority: "Visoka" | "Srednja" | "Nizka";
   assignee: string;
   name: string;
   deadline: string;

@@ -1,4 +1,4 @@
-import { ArrowUpRight, CalendarDays } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { projects } from "../../data/mockData";
 import { Avatar, AvatarGroup, Panel, Progress } from "../common/UI";
@@ -6,11 +6,11 @@ import { Avatar, AvatarGroup, Panel, Progress } from "../common/UI";
 export function ActiveProjects() {
   return (
     <Panel
-      title="Active projects"
-      subtitle="Moving forward, together"
+      title="Aktivni projekti"
+      subtitle="Skupaj naprej"
       action={
         <Link className="text-link" to="/projects">
-          View all
+          Prikaži vse
           <ArrowUpRight size={14} />
         </Link>
       }
@@ -25,7 +25,7 @@ export function ActiveProjects() {
             <div className="row-main">
               <strong>{project.name}</strong>
               <span>
-                {project.tasks} tasks · Due {project.end.slice(0, 6)}
+                {project.tasks} nalog · Rok {project.end}
               </span>
             </div>
             <AvatarGroup members={project.members} />
@@ -43,26 +43,26 @@ export function ActiveProjects() {
 
 export function Deadlines() {
   return (
-    <Panel title="Coming up" subtitle="A little room to plan ahead">
+    <Panel title="Prihaja" subtitle="Načrtujte pravočasno">
       <div className="deadline-list">
         {[
           {
             day: "09",
-            title: "Project overview design",
-            project: "Website redesign",
-            note: "Monday",
+            title: "Oblikovanje pregleda projekta",
+            project: "Prenova spletne strani",
+            note: "Ponedeljek",
           },
           {
             day: "10",
-            title: "Onboarding journey",
-            project: "Website redesign",
-            note: "Tuesday",
+            title: "Načrt uvajanja",
+            project: "Prenova spletne strani",
+            note: "Torek",
           },
           {
             day: "12",
-            title: "Component library",
-            project: "Website redesign",
-            note: "Thursday",
+            title: "Knjižnica komponent",
+            project: "Prenova spletne strani",
+            note: "Četrtek",
           },
         ].map((item) => (
           <div className="deadline-row" key={item.day}>
@@ -84,29 +84,29 @@ export function Deadlines() {
 
 export function RecentActivity() {
   return (
-    <Panel title="Recent activity" subtitle="The latest from your team">
+    <Panel title="Nedavna dejavnost" subtitle="Novosti v vaši ekipi">
       <div className="activity-list">
         {[
           {
             initials: "LK",
             name: "Luka",
-            action: "added feedback to",
-            subject: "Component library",
-            time: "25 minutes ago",
+            action: "je dodal pripombe k nalogi",
+            subject: "Knjižnica komponent",
+            time: "pred 25 minutami",
           },
           {
             initials: "NP",
             name: "Neža",
-            action: "completed",
-            subject: "Collect team feedback",
-            time: "1 hour ago",
+            action: "je zaključila nalogo",
+            subject: "Zbiranje povratnih informacij ekipe",
+            time: "pred 1 uro",
           },
           {
             initials: "MS",
             name: "Maja",
-            action: "joined",
-            subject: "Website redesign",
-            time: "2 hours ago",
+            action: "se je pridružila projektu",
+            subject: "Prenova spletne strani",
+            time: "pred 2 urama",
           },
         ].map((item) => (
           <div className="activity-row" key={item.name}>
@@ -120,10 +120,6 @@ export function RecentActivity() {
             </div>
           </div>
         ))}
-      </div>
-      <div className="panel-footnote">
-        <CalendarDays size={13} />
-        Showing sample activity for this workspace
       </div>
     </Panel>
   );
